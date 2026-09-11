@@ -18,7 +18,6 @@ import { Movie } from "../../models/movie.model";
 import { TmdbService } from "../../../core/services/tmdb.service";
 import { AuthService } from "../../../core/services/auth.service";
 import { FavoritesService } from "../../../core/services/favorites.service";
-import { RouterLink } from "@angular/router";
 
 import {
     Subject,
