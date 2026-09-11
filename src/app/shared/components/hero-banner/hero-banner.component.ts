@@ -11,13 +11,12 @@ import {
 import { Movie } from "../../models/movie.model";
 import { TmdbService } from "../../../core/services/tmdb.service";
 import { CommonModule } from "@angular/common";
-import { RouterLink } from "@angular/router";
 
 
 @Component({
     selector: 'app-hero-banner',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule],
     template: `
         <section
             *ngIf = "currentMovie as m"
