@@ -1,3 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+html,
+body {
+    height: 100%;
+    background-color: #121212;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Hide scrollbars on horizontally-scrolling movie rows, keep scroll working */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
