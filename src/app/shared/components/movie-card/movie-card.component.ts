@@ -30,7 +30,7 @@ import { MovieDetailsService } from "../../../core/services/movie-details.servic
 @Component({
     selector: 'app-movie-card',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule],
     template: `
         <div
             (click)="openDetails()"
