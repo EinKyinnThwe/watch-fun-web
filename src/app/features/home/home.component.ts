@@ -24,10 +24,10 @@ import { MovieRowComponent } from "../../shared/components/movie-row/movie-row.c
         <div
             class="py-6"
         >
-            <app-movie-row title = "Trending Movies" [movies] = "trending" [loading] = "loading" seeAllLink = "/movies/trending"/>
-            <app-movie-row title = "Upcoming Movies" [movies] = "upcoming" [loading] = "loading" seeAllLink = "/movies/upcoming"/>
-            <app-movie-row title = "Popular Show" [movies] = "popular" [loading] = "loading" seeAllLink = "/movies/popular"/>
-            <app-movie-row title = "Top Rated" [movies] = "topRated" [loading] = "loading" seeAllLink = "/movies/topRated"/>
+            <app-movie-row title = "Trending Movies" [movies] = "trending" [loading] = "loading"/>
+            <app-movie-row title = "Upcoming Movies" [movies] = "upcoming" [loading] = "loading"/>
+            <app-movie-row title = "Popular Show" [movies] = "popular" [loading] = "loading"/>
+            <app-movie-row title = "Top Rated" [movies] = "topRated" [loading] = "loading"/>
         </div>
     `,
 })

@@ -21,21 +21,13 @@ import { MovieCardComponent } from "../movie-card/movie-card.component";
             class = "mb-4 px-4 sm:px-6 lg:px-10"
         >
             <div
-                class = "mb-3 flex items-center justify-between"
+                class = "mb-8 flex items-center justify-between"
             >
                 <h2
                     class = "text-lg font-bold text-white sm:text-xl"
                 >
                     {{title}}
                 </h2>
-                
-                <a
-                    *ngIf = "seeAllLink"
-                    [routerLink] = "seeAllLink"
-                    class = "text-sm font-semibold text-[#e50914] hover:text-[#b20710]"
-                >
-                    See All 
-                </a>
             </div>
             
             <div
@@ -67,7 +59,6 @@ export class MovieRowComponent {
     
     @Input() movies: Movie[] = [];
     @Input() loading = false;
-    @Input() seeAllLink: string | null = null;
     trackByMovieId(index: number, movie: Movie): number {
         return movie.id;
     }
