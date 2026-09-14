@@ -308,7 +308,6 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
         });
 
         this.spotlight.isOpen$.pipe(takeUntil(this.destroy$)).subscribe((open) => {
-            console.log('🔍 Spotlight open?', open);
             open ? this.handleOpen() : this.handleClose();
         });
 
@@ -360,7 +359,6 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
                         .filter((r) => r.media_type === 'person')
                         .slice(0, 6);
 
-                    console.log('Movies found:', this.movieResults.length);
                     this.cdr.detectChanges();
                 },
                 error: (err) => {

@@ -18,7 +18,7 @@ import { MovieCardComponent } from "../movie-card/movie-card.component";
     imports: [CommonModule, RouterLink, MovieCardComponent],
     template: `
         <section
-            class = "mb-8 px-4 sm:px-6 lg:px-10"
+            class = "mb-4 px-4 sm:px-6 lg:px-10"
         >
             <div
                 class = "mb-3 flex items-center justify-between"

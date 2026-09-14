@@ -32,6 +32,12 @@ export const routes: Routes = [
                     import('./features/my-list/my-list.component').then(m => m.MyListComponent),
             },
             {
+                path: 'profile',
+                canActivate: [authGuard],
+                loadComponent: () => 
+                    import('./features/profile/profile.component').then(m => m.ProfileComponent),
+            },
+            {
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full',

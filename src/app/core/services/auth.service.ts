@@ -39,41 +39,31 @@ export class AuthService {
 
     async login(email: string, password: string): Promise<User> {
         try {
-            console.log('1. Starting signInWithEmailAndPassword');
             const credential = await signInWithEmailAndPassword(
                 this.auth,
                 email.trim(),
                 password
             );
-            console.log('2. Auth succeeded', credential.user.uid);
             await this.upsertUserProfile(credential.user);
-            console.log('3. Returning user');
             return credential.user;
         } catch (error) {
-            console.error('Auth error:', error);
             throw new Error(this.mapAuthError(error));
         }
     }
     
     async register(email: string, password: string, displayName: string): Promise<User> {
         try {
-            console.log('1. Starting createUserWithEmailAndPassword');
             const credential = await createUserWithEmailAndPassword(
                 this.auth,
                 email.trim(),
                 password
             );
-            console.log('2. Auth user created', credential.user.uid);
-
             if (displayName) {
                 await updateProfile(credential.user, { displayName });
-                console.log('3. Display name updated');
             }
             await this.upsertUserProfile(credential.user, { displayName });
-            console.log('4. Register finished');
             return credential.user;
         } catch (error) {
-            console.error('Register error:', error);
             throw new Error(this.mapAuthError(error));
         }
     }

@@ -4,7 +4,8 @@ import {
 
 import { 
     Component, 
-    inject
+    inject,
+    Input
 } from "@angular/core";
 
 import { 
@@ -18,19 +19,19 @@ import {
 import { 
     EmptyStateComponent 
 } from "../../shared/components/empty-state/empty-state.component";
-import { RouterLink } from "@angular/router";
+import { MovieDetailsService } from "../../core/services/movie-details.service";
 
 
 @Component({
     selector: 'app-my-list',
     standalone: true,
-    imports: [CommonModule, EmptyStateComponent, RouterLink],
+    imports: [CommonModule, EmptyStateComponent],
     template: `
         <div
             class = "mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10"
         >
             <div
-                class = "flex items-center mb-6 justify-between"
+                class = "flex items-center mb-6 justify-between mt-17"
             >
                 <h1
                     class = "text-3xl text-white font-bold"
@@ -42,7 +43,7 @@ import { RouterLink } from "@angular/router";
                     *ngIf = "(favorites$ | async)?.length"
                     type = "button"
                     (click) = "clearAll()"
-                    class = "text-[#e50914] text-sm font-semibold hover:text-white"
+                    class = "text-[#e50914] text-sm font-semibold hover:text-white cursor-pointer"
                 >
                     Clear All
                 </button>
@@ -63,7 +64,7 @@ import { RouterLink } from "@angular/router";
                 >
                     <a
                         *ngFor="let item of favorites"
-                        [routerLink]="['/movie', item['movieId']]"
+                        (click)="openDetails($any(item)['movieId'])"
                         class="group block"
                     >
                         <div 
@@ -72,7 +73,7 @@ import { RouterLink } from "@angular/router";
                         <img
                             *ngIf="tmdb.getImageUrl($any(item['poster_path']), 'w342') as posterUrl; else noPoster"
                             [src]="posterUrl"
-                            [alt]="item['title']"
+                            [alt]="$any(item).movieTitle"
                             class="h-full w-full object-cover"
                         />
                         <ng-template #noPoster>
@@ -86,7 +87,7 @@ import { RouterLink } from "@angular/router";
                         <p 
                             class="mt-2 truncate text-sm font-semibold text-white"
                         >
-                            {{ item['title'] }}
+                            {{ $any(item).movieTitle }}
                         </p>
                     </a>
                 </div>
@@ -97,11 +98,16 @@ import { RouterLink } from "@angular/router";
 
 export class MyListComponent {
     tmdb = inject(TmdbService);
+    private modal = inject(MovieDetailsService);
     
     private favoriteService = inject(FavoritesService);
     favorites$ = this.favoriteService.favorites$;
     
     async clearAll(): Promise<void> {
         await this.favoriteService.clearAll();
+    }
+    
+    openDetails(movieId: number): void {
+        this.modal.open(movieId);
     }
 }

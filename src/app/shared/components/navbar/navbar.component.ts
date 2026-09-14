@@ -55,7 +55,7 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                         <button
                             type = "button"
                             (click) = "spotlight.open()"
-                            class = "flex items-center gap-1.5 hover:text-white"
+                            class = "flex items-center gap-1.5 hover:text-white cursor-pointer"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4"
@@ -113,7 +113,7 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                     <button
                         type = "button"
                         (click) = "spotlight.open()"
-                        class = "flex h-10 w-10 items-center justify-center text-white"
+                        class = "flex h-10 w-10 items-center justify-center text-white cursor-pointer"
                         aria-label = "Search"
                     >
                         <svg
@@ -129,7 +129,7 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                     type = "button"
                     (click) = "mobileMenuOpen = !mobileMenuOpen"
                     aria-label = "Toggle menu"
-                    class = "flex h-10 w-10 items-center justify-center text-white md:hidden"
+                    class = "flex h-10 w-10 items-center justify-center text-white md:hidden cursor-pointer"
                 >
                     <svg
                         xmlns = "http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-6 w-6"
@@ -174,7 +174,7 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                                 <button
                                     type="button"
                                     (click)="mobileMenuOpen = false; spotlight.open()"
-                                    class="block w-full rounded-lg px-3 py-3 text-left transition-colors hover:bg-[#18181b] hover:text-white"
+                                    class="block w-full rounded-lg px-3 py-3 text-left transition-colors hover:bg-[#18181b] hover:text-white cursor-pointer"
                                 >
                                     Search
                                 </button>
@@ -198,7 +198,7 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                                 <button
                                     type="button"
                                     (click)="logout()"
-                                    class="w-full rounded-lg border border-[#27272a] px-3 py-3 text-left transition-all hover:border-[#e50914] hover:text-white"
+                                    class="w-full rounded-lg border border-[#27272a] px-3 py-3 text-left transition-all hover:border-[#e50914] hover:text-white cursor-pointer"
                                 >
                                     Log Out
                                 </button>

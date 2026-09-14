@@ -13,7 +13,6 @@ export class MovieDetailsService {
     readonly state$ = this.stateSubject.asObservable();
 
     open(movieId: number): void {
-        console.log('Modal open called with id:', movieId);
         this.stateSubject.next({ open: true, movieId });
     }
 

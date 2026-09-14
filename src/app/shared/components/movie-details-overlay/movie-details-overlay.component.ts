@@ -20,6 +20,7 @@ import { Subject, takeUntil } from "rxjs";
 import { FavoriteButtonComponent } from "../favorite-button/favorite-button.component";
 import { LoadingSkeletonComponent } from "../loading-skeleton/loading-skeleton.component";
 import { RatingComponent } from "../rating/rating.component";
+import { user } from "@angular/fire/auth";
 
 
 const EXIT_ANIMATION_MS = 500;
@@ -211,14 +212,9 @@ export class MovieDetailsOverlayComponent implements OnInit, OnDestroy {
     private readonly destroy$ = new Subject<void>();
 
     ngOnInit(): void {
-        console.log('DETAIL OVERLAY INIT');
-
         this.modal.state$
             .pipe(takeUntil(this.destroy$))
             .subscribe(({ open, movieId }) => {
-
-                console.log('DETAIL STATE:', open, movieId);
-
                 if (open && movieId) {
                     this.handleOpen(movieId);
                 } else if (!open) {
@@ -239,8 +235,6 @@ export class MovieDetailsOverlayComponent implements OnInit, OnDestroy {
     }
     
     private handleOpen(movieId: number): void {
-        console.log('HANDLE OPEN:', movieId);
-
         clearTimeout(this.closeTimeout);
 
         this.rendered = true;
@@ -253,21 +247,32 @@ export class MovieDetailsOverlayComponent implements OnInit, OnDestroy {
 
         this.tmdb.getMovieDetails(movieId).subscribe({
             next: (details) => {
-                console.log('MOVIE DETAILS RECEIVED:', details);
                 this.movie = details;
                 this.loading = false;
 
-                if (this.auth.currentUser) {
-                    this.favorites.isFavorite(movieId).then((val) => {
-                        this.isFavorite = val;
-                        this.cdr.detectChanges();
-                    });
-                }
+                // if (this.auth.currentUser) {
+                //     this.favorites.isFavorite(movieId).then((val) => {
+                //         this.isFavorite = val;
+                //         this.cdr.detectChanges();
+                //     });
+                // }
+                if(this.auth.currentUser$.pipe(takeUntil(this.destroy$)).subscribe(
+                    (user => {
+                        if(!user) {
+                            this.isFavorite = false;
+                            return;
+                        }
+                        if (!this.movie) return;
+                        this.favorites.isFavorite(this.movie.id).then((value) => {
+                            this.isFavorite = value;
+                            this.cdr.detectChanges();
+                        });
+                    })
+                ))
 
                 this.cdr.detectChanges();
             },
             error: (error) => {
-                console.error('MOVIE DETAILS ERROR:', error);
                 this.errorMessage = 'Could not load this movie. It may not exist.';
                 this.loading = false;
                 this.cdr.detectChanges();

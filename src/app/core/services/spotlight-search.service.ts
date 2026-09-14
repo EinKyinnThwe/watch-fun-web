@@ -13,7 +13,6 @@ export class SpotLightSearchService {
     readonly isOpen$ = this.openSubject.asObservable();
     
     open(): void {
-        console.log('✅ Service open() called');
         this.openSubject.next(true);
     }
     

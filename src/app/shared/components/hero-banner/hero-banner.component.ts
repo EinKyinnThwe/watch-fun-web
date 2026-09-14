@@ -146,9 +146,6 @@ export class HeroBannerComponent implements OnChanges, OnDestroy {
         if (!changes['movies']) {
             return;
         }
-
-        console.log('Movies received:', this.movies.length);
-
         this.clearTimers();
 
         this.currentIndex = 0;
