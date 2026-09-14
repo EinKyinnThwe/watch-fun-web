@@ -77,7 +77,7 @@ import { CommonModule } from "@angular/common";
                         class = "mt-1.5 flex flex-wrap gap-3"
                     >
                         <a
-                            class = "flex items-center gap-2 rounded-lg bg-[#e50914] px-6 py-3 text-white transition hover:bg-primary-dark font-bold"
+                            class = "flex items-center gap-2 rounded-lg bg-[#e50914] px-6 py-3 text-white transition hover:bg-primary-dark font-bold cursor-pointer"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"
@@ -88,7 +88,7 @@ import { CommonModule } from "@angular/common";
                         </a>
 
                         <a
-                            class = "flex items-center gap-2 rounded-lg bg-white/10 px-6 py-3 font-bold text-white backdrop-blur transition hover:bg-white/20"
+                            class = "flex items-center gap-2 rounded-lg bg-black/70 px-6 py-3 font-bold text-white backdrop-blur transition hover:bg-white/40 cursor-pointer"
                         >
                             More Info
                         </a>

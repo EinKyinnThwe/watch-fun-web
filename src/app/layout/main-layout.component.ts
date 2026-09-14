@@ -10,17 +10,17 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
     standalone: true,
     imports: [RouterOutlet, NavbarComponent, SpotLightSearchComponent, MovieDetailsOverlayComponent, FooterComponent],
     template: `
-    <div class="flex min-h-screen flex-col bg-background">
-      <app-navbar></app-navbar>
+        <div class="flex min-h-screen flex-col bg-background">
+            <app-navbar></app-navbar>
 
-      <main class="flex-1">
-        <router-outlet />
-      </main>
-      
-      <app-footer></app-footer>
-    </div>
-    <app-spotlight-search></app-spotlight-search>
-    <app-movie-details-overlay></app-movie-details-overlay>
+            <main class="flex-1">
+                <router-outlet />
+            </main>
+            
+            <app-footer></app-footer>
+        </div>
+        <app-spotlight-search></app-spotlight-search>
+        <app-movie-details-overlay></app-movie-details-overlay>
   `,
 })
 export class MainLayoutComponent { }

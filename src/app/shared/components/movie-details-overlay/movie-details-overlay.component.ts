@@ -54,135 +54,261 @@ const EXIT_ANIMATION_MS = 500;
                     type="button"
                     (click)="close()"
                     aria-label="Close"
-                    class="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur transition hover:bg-black/70"
+                    class="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur transition hover:bg-black/70 cursor-pointer"
                 >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="h-4 w-4">
-                    <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
-                </svg>
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2.5" 
+                        class="h-4 w-4"
+                    >
+                        <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+                    </svg>
                 </button>
 
-                <div class="max-h-[85vh] overflow-y-auto scrollbar-hide">
+                <div 
+                    class="max-h-[85vh] overflow-y-auto scrollbar-hide"
+                >
+                
                 <app-loading-skeleton *ngIf="loading" variant="detail" />
 
-                <div *ngIf="!loading && errorMessage" class="px-4 py-20 text-center text-white">
+                <div 
+                    *ngIf="!loading && errorMessage" 
+                    class="px-4 py-20 text-center text-white"
+                >
                     {{ errorMessage }}
                 </div>
 
-                <ng-container *ngIf="!loading && movie as m">
+                <ng-container 
+                    *ngIf="!loading && movie as m"
+                >
                     <!-- Backdrop, scoped to the card instead of full viewport -->
-                    <section class="relative h-[30vh] min-h-[220px] w-full overflow-hidden sm:h-[38vh]">
-                    <img
-                        *ngIf="backdropUrl"
-                        [src]="backdropUrl"
-                        [alt]="m.title"
-                        class="absolute inset-0 h-full w-full object-cover object-top"
-                    />
-                    <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(30,30,35,0.95), rgba(30,30,35,0.2));"></div>
+                    <section 
+                        class="relative h-[30vh] min-h-[220px] w-full overflow-hidden sm:h-[38vh]"
+                    >
+                        <img
+                            *ngIf="backdropUrl"
+                            [src]="backdropUrl"
+                            [alt]="m.title"
+                            class="absolute inset-0 h-full w-full object-cover object-top"
+                        />
+                        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(30,30,35,0.95), rgba(30,30,35,0.2));"></div>
                     </section>
 
-                    <div class="px-5 pb-8 pt-0 sm:px-8">
-                    <div class="flex flex-col gap-5 sm:flex-row sm:-mt-1">
-                        <img
-                        *ngIf="posterUrl"
-                        [src]="posterUrl"
-                        [alt]="m.title"
-                        class="w-32 shrink-0 rounded-xl shadow-card-hover ring-1 ring-white/10 sm:w-44"
-                        />
+                    <div 
+                        class="px-5 pb-8 pt-0 sm:px-8"
+                    >
+                        <div 
+                            class="flex flex-col gap-5 sm:flex-row sm:-mt-1"
+                        >
+                            <img
+                                *ngIf="posterUrl"
+                                [src]="posterUrl"
+                                [alt]="m.title"
+                                class="w-32 shrink-0 rounded-xl shadow-card-hover ring-1 ring-white/10 sm:w-44"
+                            />
 
-                        <div class="flex-1 pt-2 sm:pt-26">
-                        <h1 class="text-2xl font-black text-white sm:text-3xl">{{ m.title }}</h1>
-                        <p *ngIf="m.tagline" class="mt-1 italic text-white">{{ m.tagline }}</p>
+                            <div 
+                                class="flex-1 pt-2 sm:pt-26"
+                            >
+                                <h1 
+                                    class="text-2xl font-black text-white sm:text-3xl"
+                                >
+                                    {{ m.title }}
+                                </h1>
+                                <p 
+                                    *ngIf="m.tagline" 
+                                    class="mt-1 italic text-white"
+                                >
+                                    {{ m.tagline }}
+                                </p>
 
-                        <div class="mt-3 flex flex-wrap items-center gap-4 text-sm text-gray-300">
-                            <app-rating *ngIf="m.vote_average" [value]="m.vote_average" size="md" class = "text-[#f5c518]"/>
-                            <span *ngIf="m.runtime">{{ formatRuntime(m.runtime) }}</span>
-                            <span>{{ releaseYear }}</span>
-                            <span *ngFor="let genre of m.genres">
-                            <span class="rounded-full border border-white/15 px-3 py-1 text-xs">{{ genre.name }}</span>
+                                <div 
+                                    class="mt-3 flex flex-wrap items-center gap-4 text-sm text-gray-300"
+                                >
+                                    <app-rating *ngIf="m.vote_average" [value]="m.vote_average" size="md" class = "text-[#f5c518]"/>
+                                    
+                                    <span 
+                                        *ngIf="m.runtime"
+                                    >
+                                        {{ formatRuntime(m.runtime) }}
+                                    </span>
+                                    
+                                    <span>
+                                        {{ releaseYear }}
+                                    </span>
+                                    
+                                    <span 
+                                        *ngFor="let genre of m.genres"
+                                    >
+                                        <span 
+                                            class="rounded-full border border-white/15 px-3 py-1 text-xs"
+                                        >
+                                            {{ genre.name }}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p 
+                            class="mt-6 max-w-2xl text-sm leading-relaxed text-gray-200 sm:text-base"
+                        >
+                            {{ m.overview }}
+                        </p>
+
+                        <div 
+                            *ngIf="director" 
+                            class="mt-5 text-sm"
+                        >
+                            <span 
+                                class="font-semibold text-white"
+                            >
+                                Director: 
+                            </span>
+                            
+                            <span 
+                                class="text-gray-300"
+                            >
+                                {{ director }}
                             </span>
                         </div>
-                        </div>
-                    </div>
 
-                    <p class="mt-6 max-w-2xl text-sm leading-relaxed text-gray-200 sm:text-base">{{ m.overview }}</p>
-
-                    <div *ngIf="director" class="mt-5 text-sm">
-                        <span class="font-semibold text-white">Director: </span>
-                        <span class="text-gray-300">{{ director }}</span>
-                    </div>
-
-                    <div *ngIf="m.production_companies?.length" class="mt-1 text-sm">
-                        <span class="font-semibold text-white">Studio: </span>
-                        <span class="text-gray-300">{{ studioNames }}</span>
-                    </div>
-
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <button
-                        type="button"
-                        class="flex items-center gap-2 rounded-lg bg-gradient-primary px-6 py-3 font-bold text-white shadow-glow-primary transition hover:brightness-110"
+                        <div 
+                            *ngIf="m.production_companies?.length" 
+                            class="mt-1 text-sm"
                         >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
-                            <path d="M8 5v14l11-7z" />
-                        </svg>
-                            Play
-                        </button>
-                        <app-favorite-button
-                            *ngIf="auth.currentUser"
-                            [isFavorite]="isFavorite"
-                            [loading]="favoriteLoading"
-                            (toggled)="toggleFavorite()"
-                        />
-                    </div>
-
-                    <!-- Cast -->
-                    <section *ngIf="cast.length" class="mt-10">
-                        <h2 class="mb-3 text-lg font-bold text-white">Cast</h2>
-                        <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-                        <div *ngFor="let actor of cast" class="w-20 shrink-0 text-center sm:w-24">
-                            <img
-                            *ngIf="tmdb.getImageUrl(actor.profile_path, 'w185') as profileUrl; else noProfile"
-                            [src]="profileUrl"
-                            [alt]="actor.name"
-                            class="h-20 w-20 rounded-full object-cover sm:h-24 sm:w-24"
-                            />
-                            <ng-template #noProfile>
-                            <div class="flex h-20 w-20 items-center justify-center rounded-full bg-surface text-xs text-white sm:h-24 sm:w-24">
-                                No photo
-                            </div>
-                            </ng-template>
-                            <p class="mt-2 truncate text-xs font-semibold text-white">{{ actor.name }}</p>
-                            <p class="truncate text-xs text-white">{{ actor.character }}</p>
+                            <span 
+                                class="font-semibold text-white"
+                            >
+                                Studio: 
+                            </span>
+                            <span 
+                                class="text-gray-300"
+                            >
+                                {{ studioNames }}
+                            </span>
                         </div>
-                        </div>
-                    </section>
 
-                    <!-- Similar movies -->
-                    <section *ngIf="m.similar?.results?.length" class="mt-10">
-                        <h2 class="mb-3 text-lg font-bold text-white">Similar Movies</h2>
-                        <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                        <button
-                            *ngFor="let similar of m.similar!.results.slice(0, 10)"
-                            type="button"
-                            (click)="openMovie(similar)"
-                            class="w-28 shrink-0 text-left"
+                        <div 
+                            class="mt-6 flex flex-wrap gap-3"
                         >
-                            <img
-                            *ngIf="tmdb.getImageUrl(similar.poster_path, 'w342') as posterUrl; else noSimilarPoster"
-                            [src]="posterUrl"
-                            [alt]="similar.title"
-                            class="aspect-[2/3] w-28 rounded-lg object-cover shadow-card transition hover:scale-105"
+                            <button
+                                type="button"
+                                class="flex items-center gap-2 rounded-lg bg-gradient-primary px-6 py-3 font-bold text-white shadow-glow-primary transition hover:brightness-110 cursor-pointer"
+                            >
+                                <svg 
+                                    xmlns="http://www.w3.org/2000/svg" 
+                                    viewBox="0 0 24 24" 
+                                    fill="currentColor" 
+                                    class="h-7 w-7"
+                                >
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                                Play
+                            </button>
+                            <app-favorite-button
+                                *ngIf="auth.currentUser"
+                                [isFavorite]="isFavorite"
+                                [loading]="favoriteLoading"
+                                (toggled)="toggleFavorite()"
                             />
-                            <ng-template #noSimilarPoster>
-                            <div class="flex aspect-[2/3] w-28 items-center justify-center rounded-lg bg-surface text-xs text-white">
-                                No image
-                            </div>
-                            </ng-template>
-                            <p class="mt-1.5 truncate text-xs font-semibold text-white">{{ similar.title }}</p>
-                        </button>
                         </div>
-                    </section>
-                    </div>
-                </ng-container>
+
+                        <!-- Cast -->
+                        <section 
+                            *ngIf="cast.length" 
+                            class="mt-10"
+                        >
+                            <h2 
+                                class="mb-3 text-lg font-bold text-white"
+                            >
+                                Cast
+                            </h2>
+                            
+                            <div 
+                                class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide"
+                            >
+                                <div 
+                                    *ngFor="let actor of cast" 
+                                    class="w-20 shrink-0 text-center sm:w-24"
+                                >
+                                    <img
+                                        *ngIf="tmdb.getImageUrl(actor.profile_path, 'w185') as profileUrl; else noProfile"
+                                        [src]="profileUrl"
+                                        [alt]="actor.name"
+                                        class="h-20 w-20 rounded-full object-cover sm:h-24 sm:w-24"
+                                    />
+                                    <ng-template 
+                                        #noProfile
+                                    >
+                                        <div 
+                                            class="flex h-20 w-20 items-center justify-center rounded-full bg-surface text-xs text-white sm:h-24 sm:w-24"
+                                        >
+                                            No photo
+                                        </div>
+                                    </ng-template>
+                                    <p 
+                                        class="mt-2 truncate text-xs font-semibold text-white"
+                                    >
+                                        {{ actor.name }}
+                                    </p>
+                                    <p 
+                                        class="truncate text-xs text-white"
+                                    >
+                                        {{ actor.character }}
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Similar movies -->
+                        <section 
+                            *ngIf="m.similar?.results?.length" 
+                            class="mt-10"
+                        >
+                            <h2 
+                                class="mb-3 text-lg font-bold text-white"
+                            >
+                                Similar Movies
+                            </h2>
+                            
+                                <div 
+                                    class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide"
+                                >
+                                    <button
+                                        *ngFor="let similar of m.similar!.results.slice(0, 10)"
+                                        type="button"
+                                        (click)="openMovie(similar)"
+                                        class="w-28 shrink-0 text-left cursor-pointer"
+                                    >
+                                        <img
+                                            *ngIf="tmdb.getImageUrl(similar.poster_path, 'w342') as posterUrl; else noSimilarPoster"
+                                            [src]="posterUrl"
+                                            [alt]="similar.title"
+                                            class="aspect-[2/3] w-28 rounded-lg object-cover shadow-card transition hover:scale-105"
+                                        />
+                                        <ng-template 
+                                            #noSimilarPoster
+                                        >
+                                            <div 
+                                                class="flex aspect-[2/3] w-28 items-center justify-center rounded-lg bg-surface text-xs text-white"
+                                            >
+                                                No image
+                                            </div>
+                                        </ng-template>
+                                        <p 
+                                            class="mt-1.5 truncate text-xs font-semibold text-white"
+                                        >
+                                            {{ similar.title }}
+                                        </p>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -347,13 +473,38 @@ export class MovieDetailsOverlayComponent implements OnInit, OnDestroy {
         return `${hrs}h ${mins}m`;
     }
 
+    // async toggleFavorite(): Promise<void> {
+    //     if (!this.movie) return;
+    //     this.favoriteLoading = true;
+    //     try {
+    //         this.isFavorite = await this.favorites.toggle(this.movie);
+    //     } finally {
+    //         this.favoriteLoading = false;
+    //     }
+    // }
     async toggleFavorite(): Promise<void> {
-        if (!this.movie) return;
+        if (!this.movie || this.favoriteLoading) return;
+
+        const previousState = this.isFavorite;
+
+        // Change UI immediately
+        this.isFavorite = !this.isFavorite;
         this.favoriteLoading = true;
+        this.cdr.detectChanges();
+
         try {
-            this.isFavorite = await this.favorites.toggle(this.movie);
+            await this.favorites.toggle(this.movie);
+
+            console.log('FAVORITE UPDATED:', this.isFavorite);
+        } catch (error) {
+            console.error('FAVORITE ERROR:', error);
+
+            // Restore previous state if Firebase fails
+            this.isFavorite = previousState;
+            this.cdr.detectChanges();
         } finally {
             this.favoriteLoading = false;
+            this.cdr.detectChanges();
         }
     }
 }
