@@ -8,14 +8,13 @@ import {
 } from "@angular/core";
 
 import { Movie } from "../../models/movie.model";
-import { RouterLink } from "@angular/router";
 import { MovieCardComponent } from "../movie-card/movie-card.component";
 
 
 @Component({
     selector: 'app-movie-row',
     standalone: true,
-    imports: [CommonModule, RouterLink, MovieCardComponent],
+    imports: [CommonModule, MovieCardComponent],
     template: `
         <section
             class = "mb-4 px-4 sm:px-6 lg:px-10"
