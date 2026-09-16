@@ -20,10 +20,8 @@ import { Subject, takeUntil } from "rxjs";
 import { FavoriteButtonComponent } from "../favorite-button/favorite-button.component";
 import { LoadingSkeletonComponent } from "../loading-skeleton/loading-skeleton.component";
 import { RatingComponent } from "../rating/rating.component";
-import { user } from "@angular/fire/auth";
 
-
-const EXIT_ANIMATION_MS = 500;
+const EXIT_ANIMATION_MS = 700;
 
 @Component({
     selector: 'app-movie-details-overlay',
@@ -54,7 +52,7 @@ const EXIT_ANIMATION_MS = 500;
                     type="button"
                     (click)="close()"
                     aria-label="Close"
-                    class="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur transition hover:bg-black/70 cursor-pointer"
+                    class="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:bg-black/90 cursor-pointer"
                 >
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
@@ -494,11 +492,7 @@ export class MovieDetailsOverlayComponent implements OnInit, OnDestroy {
 
         try {
             await this.favorites.toggle(this.movie);
-
-            console.log('FAVORITE UPDATED:', this.isFavorite);
         } catch (error) {
-            console.error('FAVORITE ERROR:', error);
-
             // Restore previous state if Firebase fails
             this.isFavorite = previousState;
             this.cdr.detectChanges();

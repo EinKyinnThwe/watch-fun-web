@@ -1,46 +1,42 @@
-import { 
-    CommonModule 
+import {
+    CommonModule
 } from "@angular/common";
 
-import { 
+import {
     ChangeDetectorRef,
-    Component, 
-    ElementRef, 
-    HostListener, 
+    Component,
+    ElementRef,
+    HostListener,
     inject,
     OnDestroy,
     OnInit,
     ViewChild
 } from "@angular/core";
 
-import { 
-    FormsModule 
+import {
+    FormsModule
 } from "@angular/forms";
 
-import { 
-    TmdbService 
+import {
+    TmdbService
 } from "../../../core/services/tmdb.service";
 
-import { 
-    SpotLightSearchService 
+import {
+    SpotLightSearchService
 } from "../../../core/services/spotlight-search.service";
 
-import { 
-    Router 
-} from "@angular/router";
-
-import { 
-    MultiSearchItem 
+import {
+    MultiSearchItem
 } from "../../models/movie.model";
 
-import { 
+import {
     debounceTime,
     distinctUntilChanged,
     forkJoin,
     map,
     of,
-    Subject, 
-    switchMap, 
+    Subject,
+    switchMap,
     takeUntil,
     tap
 } from "rxjs";
@@ -49,7 +45,7 @@ import { MovieDetailsService } from "../../../core/services/movie-details.servic
 
 const RECENT_SEARCHES_KEY = 'spotlight-recent-searches';
 const MAX_RECENT = 6;
-const EXIT_ANIMATION_MS = 500;
+const EXIT_ANIMATION_MS = 700;
 
 @Component({
     selector: 'app-spotlight-search',
@@ -104,7 +100,7 @@ const EXIT_ANIMATION_MS = 500;
                         type="button"
                         (click)="clearQuery()"
                         aria-label="Clear search"
-                        class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-muted hover:bg-white/20 hover:text-white"
+                        class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[#a1a1aa] hover:bg-white/20 hover:text-white cursor-pointer"
                     >
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
@@ -112,7 +108,7 @@ const EXIT_ANIMATION_MS = 500;
                             fill="none" 
                             stroke="currentColor" 
                             stroke-width="2.5" 
-                            class="h-3 w-3"
+                            class="h-3.5 w-3.5 text-[#f40612] hover:text-white"
                         >
                             <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
                         </svg>
@@ -120,7 +116,7 @@ const EXIT_ANIMATION_MS = 500;
                     <button
                         type="button"
                         (click)="close()"
-                        class="shrink-0 text-sm font-semibold text-[#e50914] hover:text-white"
+                        class="shrink-0 text-sm font-semibold text-[#e50914] hover:text-white cursor-pointer"
                     >
                         Cancel
                     </button>
@@ -137,12 +133,11 @@ const EXIT_ANIMATION_MS = 500;
                                     *ngFor="let term of recentSearches"
                                     type="button"
                                     (click)="selectTerm(term)"
-                                    class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white hover:bg-white/10"
+                                    class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white hover:bg-black/50 cursor-pointer hover:text-[#b20710] hover:border-[#3f3f46]"
                                 >
                                     {{ term }}
                                     <span
                                         (click)="removeRecent(term, $event)"
-                                        class="text-muted hover:text-white"
                                         role="button"
                                         [attr.aria-label]="'Remove ' + term + ' from recent searches'"
                                     >
@@ -159,7 +154,7 @@ const EXIT_ANIMATION_MS = 500;
                                     *ngFor="let term of trendingSearches"
                                     type="button"
                                     (click)="selectTerm(term)"
-                                    class="rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-sm font-medium text-white hover:bg-primary/20"
+                                    class="rounded-full border border-[#3f3f46] bg-primary/10 px-3 py-1.5 text-sm font-medium text-white hover:bg-black/50 cursor-pointer hover:border-[#b20710]"
                                 >
                                     🔥 {{ term }}
                                 </button>
@@ -193,7 +188,7 @@ const EXIT_ANIMATION_MS = 500;
                                 *ngFor="let movie of movieResults"
                                 type="button"
                                 (click)="selectMovie(movie)"
-                                class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition hover:bg-white/5"
+                                class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition hover:bg-white/20 cursor-pointer"
                             >
                             <img
                                 *ngIf="tmdb.getImageUrl(movie.poster_path ?? null, 'w185') as posterUrl; else noPoster"
@@ -266,19 +261,19 @@ const EXIT_ANIMATION_MS = 500;
     `,
 })
 
-export class SpotLightSearchComponent implements OnInit, OnDestroy{
+export class SpotLightSearchComponent implements OnInit, OnDestroy {
     @ViewChild('searchInput') searchInputRef?: ElementRef<HTMLInputElement>;
     private cdr = inject(ChangeDetectorRef);
 
     tmdb = inject(TmdbService);
     private spotlight = inject(SpotLightSearchService);
     private movieModal = inject(MovieDetailsService);
-    
+
     rendered = false;
     visible = false;
     query = '';
     loading = false;
-    
+
     movieResults: MultiSearchItem[] = [];
     personResults: MultiSearchItem[] = [];
     genreMap: Record<number, string> = {};
@@ -289,7 +284,7 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
     private closeTimeout?: ReturnType<typeof setTimeout>;
     private readonly queryChanges$ = new Subject<string>();
     private readonly destroy$ = new Subject<void>();
-    
+
     ngOnInit(): void {
         this.recentSearches = this.loadRecentSearches();
 
@@ -313,17 +308,16 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
 
         this.queryChanges$
             .pipe(
-                debounceTime(400),
+                debounceTime(1000),
                 distinctUntilChanged(),
-                tap((q) => {
-                    this.loading = !!q.trim();
-                    this.cdr.detectChanges();
-                }),
+
                 switchMap((q) => {
                     const term = q.trim();
-                    if (!term) return of(null);
 
-                    // Load first 3 pages in parallel
+                    if (!term) {
+                        return of(null);
+                    }
+
                     return forkJoin([
                         this.tmdb.searchMulti(term, 1),
                         this.tmdb.searchMulti(term, 2),
@@ -331,9 +325,11 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
                     ]).pipe(
                         map((pages) => {
                             const allResults = pages.flatMap((p) => p.results);
+
                             return {
                                 results: allResults,
-                                total_results: pages[0]?.total_results ?? allResults.length,
+                                total_results:
+                                    pages[0]?.total_results ?? allResults.length,
                             };
                         })
                     );
@@ -342,9 +338,8 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
             )
             .subscribe({
                 next: (response) => {
-                    this.loading = false;
-
                     if (!response) {
+                        this.loading = false;
                         this.movieResults = [];
                         this.personResults = [];
                         this.cdr.detectChanges();
@@ -359,13 +354,16 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
                         .filter((r) => r.media_type === 'person')
                         .slice(0, 6);
 
+                    this.loading = false;
                     this.cdr.detectChanges();
                 },
                 error: (err) => {
                     console.error('Search error:', err);
+
                     this.loading = false;
                     this.movieResults = [];
                     this.personResults = [];
+
                     this.cdr.detectChanges();
                 },
             }
@@ -419,6 +417,14 @@ export class SpotLightSearchComponent implements OnInit, OnDestroy{
 
     onQueryChange(value: string): void {
         this.query = value;
+        if (!value.trim()) {
+            this.loading = false;
+            this.movieResults = [];
+            this.personResults = [];
+        } else {
+            this.loading = true;
+        }
+        this.cdr.detectChanges();
         this.queryChanges$.next(value);
     }
 
