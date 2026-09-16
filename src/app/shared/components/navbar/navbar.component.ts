@@ -158,18 +158,7 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                                     Home
                                 </a>
                             </li>
-
-                            <li *ngIf="auth.currentUser">
-                                <a
-                                    routerLink="/my-list"
-                                    routerLinkActive="text-white bg-[#18181b]"
-                                    (click)="mobileMenuOpen = false"
-                                    class="block rounded-lg px-3 py-3 transition-colors hover:bg-[#18181b] hover:text-white"
-                                >
-                                    My List
-                                </a>
-                            </li>
-
+                            
                             <li>
                                 <button
                                     type="button"
@@ -179,30 +168,70 @@ import { SpotLightSearchService } from "../../../core/services/spotlight-search.
                                     Search
                                 </button>
                             </li>
-
-                            <li *ngIf="auth.currentUser">
-                                <a
-                                    routerLink="/profile"
-                                    routerLinkActive="text-white bg-[#18181b]"
-                                    (click)="mobileMenuOpen = false"
-                                    class="block rounded-lg px-3 py-3 transition-colors hover:bg-[#18181b] hover:text-white"
-                                >
-                                    Profile
-                                </a>
-                            </li>
-
-                            <li
-                                *ngIf="auth.currentUser"
-                                class="pt-2"
+                            
+                            <ng-container
+                                *ngIf = "auth.currentUser$ | async as user; else mobileAuthLinks"
                             >
-                                <button
-                                    type="button"
-                                    (click)="logout()"
-                                    class="w-full rounded-lg border border-[#27272a] px-3 py-3 text-left transition-all hover:border-[#e50914] hover:text-white cursor-pointer"
+                                <li>
+                                    <a
+                                        routerLink="/my-list"
+                                        routerLinkActive="text-white bg-[#18181b]"
+                                        (click)="mobileMenuOpen = false"
+                                        class="block rounded-lg px-3 py-3 transition-colors hover:bg-[#18181b] hover:text-white"
+                                    >
+                                        My List
+                                    </a>
+                                </li>
+                                
+                                <li>
+                                    <a
+                                        routerLink="/profile"
+                                        routerLinkActive="text-white bg-[#18181b]"
+                                        (click)="mobileMenuOpen = false"
+                                        class="block rounded-lg px-3 py-3 transition-colors hover:bg-[#18181b] hover:text-white"
+                                    >
+                                        Profile
+                                    </a>
+                                </li>
+                                
+                                <li
+                                    class="pt-2"
                                 >
-                                    Log Out
-                                </button>
-                            </li>
+                                    <button
+                                        type="button"
+                                        (click)="logout()"
+                                        class="w-full rounded-lg border border-[#27272a] px-3 py-3 text-left transition-all hover:border-[#e50914] hover:text-white cursor-pointer"
+                                    >
+                                        Log Out
+                                    </button>
+                                </li>
+                            </ng-container>
+                            
+                            <ng-template #mobileAuthLinks>
+                                <li 
+                                    class="pt-2"
+                                > 
+                                    <a 
+                                        routerLink="/login" 
+                                        (click)="mobileMenuOpen = false" 
+                                        class="block rounded-lg px-3 py-3 text-[#a1a1aa] transition-colors hover:bg-[#18181b] hover:text-white" 
+                                    > 
+                                        Login 
+                                    </a>
+                                </li>
+
+                                <li 
+                                    class = "pt-2"
+                                > 
+                                    <a 
+                                        routerLink="/register" 
+                                        (click)="mobileMenuOpen = false" 
+                                        class="block rounded-lg bg-[#e50914] px-3 py-3 text-center font-semibold text-white transition-colors hover:bg-[#f40612]" 
+                                    > 
+                                        Sign Up 
+                                    </a> 
+                                </li>
+                            </ng-template>
 
                         </ul>
                     </div>
