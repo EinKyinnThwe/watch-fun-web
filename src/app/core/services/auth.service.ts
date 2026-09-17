@@ -69,13 +69,36 @@ export class AuthService {
     }
     
     // Login with Google
+    // async loginWithGoogle(): Promise<User> {
+    //     try {
+    //         const provider = new GoogleAuthProvider();
+    //         const credential = await signInWithPopup(this.auth, provider);
+    //         await this.upsertUserProfile(credential.user);
+    //         return credential.user;
+    //     } catch (error) {
+    //         throw new Error(this.mapAuthError(error));
+    //     }
+    // }
     async loginWithGoogle(): Promise<User> {
         try {
             const provider = new GoogleAuthProvider();
-            const credential = await signInWithPopup(this.auth, provider);
+
+            provider.setCustomParameters({
+                prompt: 'select_account'
+            });
+
+            const credential = await signInWithPopup(
+                this.auth,
+                provider
+            );
+
             await this.upsertUserProfile(credential.user);
+
             return credential.user;
+
         } catch (error) {
+            console.error('Google Sign-In Error:', error);
+
             throw new Error(this.mapAuthError(error));
         }
     }
